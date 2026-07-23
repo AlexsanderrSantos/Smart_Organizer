@@ -1,0 +1,1 @@
+*O programa deve avisar quando se é criada uma copia do arquivo enviado.
