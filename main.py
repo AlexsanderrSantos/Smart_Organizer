@@ -27,6 +27,7 @@ def organizar_arquivo(arquivo, pasta):
             pasta.mkdir()
         
         destino = pasta / arquivo.name
+        arquivo_renomeado = False
         
         contador = 1
         
@@ -34,9 +35,13 @@ def organizar_arquivo(arquivo, pasta):
             novo_nome = f"{arquivo.stem}_{contador}{arquivo.suffix}"
             destino = pasta / novo_nome
             contador += 1
-            
-        shutil.move(arquivo, destino)
-        print(f"O arquivo {arquivo.name} foi movido para a pasta {destino.name}")
+            arquivo_renomeado = True
+        if arquivo_renomeado:
+            print(f"O arquivo {destino} já existe e foi renomeado para {novo_nome} e enviado para a pasta {pasta.name}")
+            shutil.move(arquivo, destino)
+        else:
+            print(f"O arquivo {arquivo.name} foi movido para a pasta {pasta.name}")
+            shutil.move(arquivo, destino)
         
     except Exception as erro:
         print(f"Erro ao mover o arquivo {arquivo}: {erro}")
