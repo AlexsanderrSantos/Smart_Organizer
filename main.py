@@ -13,12 +13,27 @@ pasta_videos = diretorio_download / "Videos"
 pasta_musicas = diretorio_download / "Musicas"
 pasta_outros = diretorio_download / "Outros"
 
+#Dicionário para mapear as extensões.
 
-#Tipo de arquivos
-documentos = [".pdf", ".txt", ".docx", ".xlsx", ".pptx"]
-imagens = [".jpg",".png", ".gif"]
-videos = [".mp4", ".mkv", ".avi"]
-musicas = [".mp3", ".wav", ".flac"]
+pastas_por_extensao ={
+    ".pdf":pasta_documentos,
+    ".txt":pasta_documentos,
+    ".docx":pasta_documentos,
+    ".xlsx":pasta_documentos,
+    ".pptx":pasta_documentos,
+    
+    ".jpg":pasta_imagens,
+    ".png":pasta_imagens,
+    ".gif":pasta_imagens,
+    
+    ".mp4":pasta_videos,
+    ".mkv":pasta_videos,
+    ".avi":pasta_videos,
+    
+    ".mp3":pasta_musicas,
+    ".wav":pasta_musicas,
+    ".flac":pasta_musicas  
+}
 
 #função para organizar os arquivos
 def organizar_arquivo(arquivo, pasta):
@@ -52,23 +67,17 @@ if diretorio_download.exists():
     for arquivo in diretorio_download.iterdir():
         
         if arquivo.is_file():
-            
             extensao = arquivo.suffix.lower()
             
-            if extensao in documentos:
-                organizar_arquivo(arquivo, pasta_documentos)
-        
-            elif extensao in imagens:
-               organizar_arquivo(arquivo, pasta_imagens)
-
-            elif extensao in videos:
-                organizar_arquivo(arquivo, pasta_videos)
+            pasta_extensao = pastas_por_extensao.get(extensao)
             
-            elif extensao in musicas:
-                organizar_arquivo(arquivo, pasta_musicas)
+            pasta_destino = pasta_extensao
+            if pasta_destino is None:
+                pasta_destino = pasta_outros
+                
+            organizar_arquivo(arquivo, pasta_destino)
             
-            else:      
-                organizar_arquivo(arquivo, pasta_outros)           
+             
 
 else: 
     print("Não tem arquivo nesta pasta")
