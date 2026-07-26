@@ -51,15 +51,19 @@ def organizar_arquivo(arquivo, pasta):
             destino = pasta / novo_nome
             contador += 1
             arquivo_renomeado = True
+            
         if arquivo_renomeado:
             print(f"O arquivo {destino} já existe e foi renomeado para {novo_nome} e enviado para a pasta {pasta.name}")
-            shutil.move(arquivo, destino)
+    
         else:
             print(f"O arquivo {arquivo.name} foi movido para a pasta {pasta.name}")
-            shutil.move(arquivo, destino)
+            
+        shutil.move(arquivo, destino)
         
     except Exception as erro:
         print(f"Erro ao mover o arquivo {arquivo}: {erro}")
+        
+        
 
 #Verifica se o diretório download existe e organiza os arquivos de acordo com o tipo. 
 if diretorio_download.exists():
@@ -69,15 +73,12 @@ if diretorio_download.exists():
         if arquivo.is_file():
             extensao = arquivo.suffix.lower()
             
-            pasta_extensao = pastas_por_extensao.get(extensao)
+            pasta_destino = pastas_por_extensao.get(extensao)
             
-            pasta_destino = pasta_extensao
             if pasta_destino is None:
                 pasta_destino = pasta_outros
                 
-            organizar_arquivo(arquivo, pasta_destino)
-            
-             
+            organizar_arquivo(arquivo, pasta_destino)     
 
 else: 
     print("Não tem arquivo nesta pasta")
