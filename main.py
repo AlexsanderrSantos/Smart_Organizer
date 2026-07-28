@@ -59,14 +59,18 @@ def organizar_arquivo(arquivo, pasta):
             print(f"O arquivo {arquivo.name} foi movido para a pasta {pasta.name}")
             
         shutil.move(arquivo, destino)
+        return True
         
     except Exception as erro:
         print(f"Erro ao mover o arquivo {arquivo}: {erro}")
+        return False
         
         
 
 #Verifica se o diretório download existe e organiza os arquivos de acordo com o tipo. 
 if diretorio_download.exists():
+    
+    total_arquivos = 0
     
     for arquivo in diretorio_download.iterdir():
         
@@ -78,7 +82,9 @@ if diretorio_download.exists():
             if pasta_destino is None:
                 pasta_destino = pasta_outros
                 
-            organizar_arquivo(arquivo, pasta_destino)     
-
+            sucesso = organizar_arquivo(arquivo, pasta_destino)     
+            if sucesso:
+                total_arquivos += 1
+    print(f"Total de arquivos organizados: {total_arquivos}")
 else: 
     print("Não tem arquivo nesta pasta")
