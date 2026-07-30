@@ -70,7 +70,13 @@ def organizar_arquivo(arquivo, pasta):
 #Verifica se o diretório download existe e organiza os arquivos de acordo com o tipo. 
 if diretorio_download.exists():
     
-    total_arquivos = 0
+    contadores = {
+        "documentos": 0,
+        "imagens": 0,
+        "videos": 0,
+        "musicas": 0,
+        "outros": 0
+    }
     
     for arquivo in diretorio_download.iterdir():
         
@@ -84,7 +90,21 @@ if diretorio_download.exists():
                 
             sucesso = organizar_arquivo(arquivo, pasta_destino)     
             if sucesso:
-                total_arquivos += 1
-    print(f"Total de arquivos organizados: {total_arquivos}")
+                if pasta_destino == pasta_documentos:
+                    contadores["documentos"] += 1
+                elif pasta_destino == pasta_imagens:
+                    contadores["imagens"] += 1
+                elif pasta_destino == pasta_videos:
+                    contadores["videos"] += 1
+                elif pasta_destino == pasta_musicas:
+                    contadores["musicas"] += 1
+                else:
+                    contadores["outros"] += 1
+                    
+    print(f"Os arquivos organizados foram:")
+    for tipo, quantidade in contadores.items(): #items entrega chave e valor junto
+        print(f"{tipo}: {quantidade}")
+          
+    
 else: 
     print("Não tem arquivo nesta pasta")
