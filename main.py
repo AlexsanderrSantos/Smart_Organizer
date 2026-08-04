@@ -12,6 +12,7 @@ pasta_imagens = diretorio_download / "Imagens"
 pasta_videos = diretorio_download / "Videos"
 pasta_musicas = diretorio_download / "Musicas"
 pasta_outros = diretorio_download / "Outros"
+pasta_sem_extensao = diretorio_download / "Sem Extensão"
 
 #Dicionário para mapear as extensões.
 
@@ -32,7 +33,9 @@ pastas_por_extensao ={
     
     ".mp3":pasta_musicas,
     ".wav":pasta_musicas,
-    ".flac":pasta_musicas  
+    ".flac":pasta_musicas,
+    
+    "":pasta_sem_extensao
 }
 
 #função para organizar os arquivos
@@ -75,7 +78,8 @@ if diretorio_download.exists():
         "imagens": 0,
         "videos": 0,
         "musicas": 0,
-        "outros": 0
+        "outros": 0,
+        "sem_extensao": 0
     }
     
     for arquivo in diretorio_download.iterdir():
@@ -98,6 +102,8 @@ if diretorio_download.exists():
                     contadores["videos"] += 1
                 elif pasta_destino == pasta_musicas:
                     contadores["musicas"] += 1
+                elif pasta_destino == pasta_sem_extensao:
+                    contadores["sem_extensao"] += 1
                 else:
                     contadores["outros"] += 1
                     
